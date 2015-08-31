@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    >
+
+    <!-- Views with route information
+    They will be changed in the adapter -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/duration"
+        android:gravity="top"
+        android:text="Duration"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/distance"
+        android:layout_gravity="center_vertical"
+        android:text="Distance"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/price"
+        android:layout_gravity="center_vertical"
+        android:text="Price"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/discount"
+        android:layout_gravity="center_vertical"
+        android:text="Discount"
+        android:layout_weight="1"
+        android:textColor="@color/wallet_holo_blue_light"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/total_price"
+        android:layout_gravity="center_vertical"
+        android:text="Total Price"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        />
+
+</LinearLayout>
