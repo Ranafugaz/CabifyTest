@@ -1,13 +1,10 @@
-package cabifytest.com.cabifytest;
-
-import android.graphics.drawable.Drawable;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * Created by Pradana on 28/08/15.
  * Used to save the information about each trip and show it on the list activity
  */
+
+package cabifytest.com.cabifytest;
+
 public class Trip{
 
 

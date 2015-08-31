@@ -1,12 +1,11 @@
+/**
+ * Created by Pradana on 28/08/15.
+ * Class Used by the spinner.
+ */
+
 package cabifytest.com.cabifytest;
 
 import android.graphics.drawable.Drawable;
-
-/**
- * Created by Pradana on 28/08/15.
- * Used by the spinner.
- * Each country has a drawable flag and a name
- */
 
 //Class for the spinner Adapter
 public class Country {

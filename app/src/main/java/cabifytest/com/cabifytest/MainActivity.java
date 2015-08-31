@@ -1,18 +1,20 @@
+
+/**
+ * Solution by Javier Pradana
+ * Main activity extends ListActivity to control main list of activity
+ * Implements methods for click and select object on lists (country and trips)
+ */
+
 package cabifytest.com.cabifytest;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,72 +25,59 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.maps.android.PolyUtil;
 import com.google.maps.android.geometry.Point;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
 
-
-/** Solution by Javier Pradana
- * Main activity extends ListActivity to control the list of the activity
- * Implements methods for click and select object on lists (country and trips)
- *
- */
 public class MainActivity extends ListActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener, OnMapReadyCallback{
 
     //Prices per KM
-    final double priceKM_ES=1.5;
-    final double priceKM_MX=14;
-    final double priceKM_PE=2.5;
+    static final double priceKM_ES=1.5;
+    static final double priceKM_MX=14;
+    static final double priceKM_PE=2.5;
 
     //Prices per min
-    final double priceMIN_ES=0.5;
-    final double priceMIN_MX=2.5;
-    final double priceMIN_PE=0.5;
+    static final double priceMIN_ES=0.5;
+    static final double priceMIN_MX=2.5;
+    static final double priceMIN_PE=0.5;
 
     //Prices per KM array
-    double pricesKM[]= {priceKM_ES,priceKM_MX,priceKM_PE};
+    static final double pricesKM[]= {priceKM_ES,priceKM_MX,priceKM_PE};
 
     //Prices per Min array
-    double pricesMIN[]= {priceMIN_ES,priceMIN_MX,priceMIN_PE};
+    static final double pricesMIN[]= {priceMIN_ES,priceMIN_MX,priceMIN_PE};
 
     //List for the Adapter of object Trip to show on the activity
-    List<Trip> lista= new ArrayList<Trip>();
+    List<Trip> lista= new ArrayList<>();
 
     //Variable for the map
     GoogleMap mMap;
 
     //Discount
-    final double discount = 0.1;
+    static final double discount = 0.1;
 
     //Country names for the spinner
-    String[] country = {"Spain","Mexico","Peru"};
+    static final String[] country = {"Spain","Mexico","Peru"};
 
     //Polyline decoding precision. Use 1e6 for osm and 1e5 for google maps
-    final double precision = 1e6;
+    static final double precision = 1e6;
 
     //File name for the Trip Json in the assets directory
-    final String file_name = "journeys.txt";
+    static final String file_name = "journeys.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +105,7 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemSele
         Spinner spinner = (Spinner) findViewById(R.id.country_spinner);
 
         //Create and initate List
-        ArrayList<Country> countryList = new ArrayList<Country>();
+        ArrayList<Country> countryList = new ArrayList<>();
 
         //Add items to show in the List. Better implementation with case for the flags
         countryList.add(new Country(country[0],getResources().getDrawable(R.drawable.spain)));
@@ -202,7 +191,13 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemSele
 
             //Create a bound to show the route on the map and move the camera
             LatLngBounds bounds = LatLngBounds.builder().include(new LatLng(lat1, lng1)).include(new LatLng(lat2, lng2)).build();
+            try {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 150));
+            }
+            //In case the view is not big enough to move include both points
+            catch(IllegalStateException e){
+                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
+            }
         }
     }
 
@@ -352,8 +347,14 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemSele
                     String polyLine = route.getString("route_geometry");
 
                     //Calculation of rounded prices
-                    double price_km= Math.round(pricesKM[position] * distance/1000 *10)/10;
-                    double price_min = Math.round(pricesMIN[position] * duration / 60*10)/10;
+                    double price_km=pricesKM[position] * distance / 1000;
+                    price_km = price_km * 10;
+                    price_km = Math.round(price_km);
+                    price_km= price_km /10;
+                    double price_min = pricesMIN[position] * duration / 60;
+                    price_min= price_min *10;
+                    price_min= Math.round(price_min);
+                    price_min = price_min /10;
 
                     //Select the highest price
                     double price;
@@ -361,7 +362,10 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemSele
                     else price=price_min;
 
                     //Calculation of rounded total price with discount
-                    double total_price= Math.round((1-discount)*price*10)/10;
+                    double total_price= ((1-discount)*price);
+                    total_price=total_price * 10;
+                    total_price = Math.round(total_price);
+                    total_price = total_price /10;
 
                     //Adding to the list of the new object Trip
                     lista.add(new Trip(
@@ -402,7 +406,7 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemSele
          */
         public String readIt(InputStream stream, int len) throws IOException {
             //Create reader
-            Reader reader = null;
+            Reader reader;
 
             //Definition as InputStream with the origin and text type UTF8
             reader = new InputStreamReader(stream, "UTF-8");

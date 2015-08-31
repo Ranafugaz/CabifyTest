@@ -1,3 +1,7 @@
+/**
+ * Created by Pradana on 06/05/15.
+ * Array Adapter used by the spinner
+ */
 package cabifytest.com.cabifytest;
 
 import android.app.Activity;
@@ -10,11 +14,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by Pradana on 06/05/15.
- * Array Adapter used by the spinner
- *
- */
 public class CountryListArrayAdapter extends ArrayAdapter<Country> {
 
     //List to show on the spinner

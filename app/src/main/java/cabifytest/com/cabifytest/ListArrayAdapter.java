@@ -1,20 +1,19 @@
+/**
+ * Created by Pradana on 06/05/15.
+ * Adapter used by the main List
+ */
+
 package cabifytest.com.cabifytest;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by Pradana on 06/05/15.
- * Adapter used by the List
- */
 public class ListArrayAdapter extends ArrayAdapter<Trip>  {
 
     private final List<Trip> list;

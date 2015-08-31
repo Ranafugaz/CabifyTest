@@ -1,15 +1,15 @@
+/**
+ * Took from https://github.com/scoutant/polyline-decoder/tree/b32557f6f6a2ac6769c6a5c175e41f53f60a8e4b
+ * Port to Java of Mark McClures Javascript PolylineEncoder :
+ * http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/decode.js
+ */
+
 package cabifytest.com.cabifytest;
 
 import com.google.maps.android.geometry.Point;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Took from https://github.com/scoutant/polyline-decoder/tree/b32557f6f6a2ac6769c6a5c175e41f53f60a8e4b
- * Port to Java of Mark McClures Javascript PolylineEncoder :
- * http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/decode.js
- */
 
 public class PolylineDecoder {
     private static final double DEFAULT_PRECISION = 1E5;
